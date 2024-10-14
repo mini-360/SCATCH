@@ -1,6 +1,5 @@
 import mongoose, { Schema } from "mongoose";
 
-mongoose.connect("mongodb://127.0.0.1:27017/SCATCH");
 
 const userSchema = new Schema({
   fullname: {
