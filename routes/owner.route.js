@@ -9,17 +9,18 @@ router.get("/", (req, res) => {
 });
 
 router.post("/create", async (req, res) => {
-  try {
-    let owners = await Owner.find();
-    console.log(owners);
+    try {
+        let { fullname, email, password } = req.body;
+        
+    let ownersemail = await Owner.findOne({email});
 
-    if (owners.length > 0) {
+    if (ownersemail) {
       return res
         .status(403)
         .send("You don't have permissions to create a new owner");
     }
 
-    let { fullname, email, password } = req.body;
+    
     let createdOwner = await Owner.create({
       fullname,
       email,

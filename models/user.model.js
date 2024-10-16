@@ -21,7 +21,6 @@ const userSchema = new Schema({
     type: Array,
     default: [],
   },
-  isadmin: Boolean,
   orders: {
     type: Array,
     default: [],
