@@ -1,16 +1,9 @@
 import express from "express";
 
+import { registerUser } from "../controllers/userAuth.controller.js";
+
 const router = express.Router();
 
-import {} from "../models/user.model.js";
-
-router.post("/register", async (req, res) => {
-    try { 
-        
-    }
-    catch (err) {
-        console.log(err.message);
-    }
-});
+router.post("/register",registerUser);
 
 export const userRoute = router;
