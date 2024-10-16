@@ -1,8 +1,17 @@
-POST http://localhost:3000/users/register
+# POST http://localhost:3000/users/register
+# Content-Type: application/json
+
+# {
+#     "password":"123456",
+#     "email":"abhayraj@gmail.com",
+#     "fullname":"Abhay Raj"
+# }
+
+
+POST http://localhost:3000/users/login
 Content-Type: application/json
 
 {
-    "password":"123456",
     "email":"abhayraj@gmail.com",
-    "fullname":"Abhay Raj"
+    "password":"123456"
 }
