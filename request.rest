@@ -1,8 +1,6 @@
-POST  http://localhost:3000/owners/create
+GET   http://localhost:3000
 Content-Type: application/json
 
 {
-    "fullname":"Virat Kohli",
-    "email":"viratkohli@gmail.com",
-    "password":"123456"
+    
 }
