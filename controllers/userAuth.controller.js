@@ -23,7 +23,7 @@ const authController = async (req, res) => {
         fullname,
       });
       let token = generateToken(user);
-    //   res.cookie("token", token);
+      //   res.cookie("token", token);
       res.send("user created successfully");
     } catch (error) {
       res.send(error.message);
@@ -31,4 +31,28 @@ const authController = async (req, res) => {
   });
 };
 
-export const registerUser = authController;
+const loginUser = async (req, res) => {
+  let { email, password } = req.body;
+
+  let user = await User.findOne({ email });
+
+  if (!user) {
+    return res.status(403).send("Email or password incorrect");
+  }
+
+  bcrypt.compare(password, user.password, (err, result) => {
+    if (err) {
+      return res
+        .status(403)
+        .send("Error occurred while login please try again");
+    }
+    if (!result) {
+      return res.status(403).send("incorrect email or password");
+    }
+    let token = generateToken(user);
+    res.cookie("token", token);
+    res.send("you can login")
+  });
+};
+
+export { authController, loginUser };
