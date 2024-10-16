@@ -8,12 +8,13 @@ const authController = async (req, res) => {
 
   let user = await User.findOne({ email });
   if (user) {
-    return res.status(401).send("User already have account");
+    req.flash("error", "You already have an account, please login.");
+    return res.redirect("/");
   }
 
   bcrypt.hash(password, 10, async (err, hashed_password) => {
     if (err) {
-      res.send(err.message);
+      return res.send(err.message);
     }
 
     try {
@@ -23,8 +24,8 @@ const authController = async (req, res) => {
         fullname,
       });
       let token = generateToken(user);
-      //   res.cookie("token", token);
-      res.send("user created successfully");
+      res.cookie("token", token);
+      res.redirect("/shop");
     } catch (error) {
       res.send(error.message);
     }
@@ -34,10 +35,11 @@ const authController = async (req, res) => {
 const loginUser = async (req, res) => {
   let { email, password } = req.body;
 
-  let user = await User.findOne({ email });
+  let user = await User.findOne({ email: email });
 
   if (!user) {
-    return res.status(403).send("Email or password incorrect");
+    req.flash("error", "Email or Password incorrect");
+    return res.redirect("/");
   }
 
   bcrypt.compare(password, user.password, (err, result) => {
@@ -47,12 +49,18 @@ const loginUser = async (req, res) => {
         .send("Error occurred while login please try again");
     }
     if (!result) {
-      return res.status(403).send("incorrect email or password");
+      req.flash("error", "Email or Password incorrect");
+      return res.redirect("/");
     }
     let token = generateToken(user);
     res.cookie("token", token);
-    res.send("you can login")
+    res.redirect("/shop");
   });
 };
 
-export { authController, loginUser };
+const logout = (req, res) => {
+  res.cookie("token", "");
+  res.redirect("/");
+};
+
+export { authController, loginUser, logout };

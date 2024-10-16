@@ -34,4 +34,9 @@ router.post("/create", async (req, res) => {
   }
 });
 
+router.get("/admin", (req, res) => {
+  let success=req.flash("success")
+  res.render("createproducts",{success})
+})
+
 export const ownerRoute = router;
