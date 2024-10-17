@@ -17,10 +17,10 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-  cart: {
-    type: Array,
-    default: [],
-  },
+  cart: [{
+    type: Schema.Types.ObjectId,
+    ref:"Product"
+  }],
   orders: {
     type: Array,
     default: [],
